@@ -8,7 +8,7 @@ c.height = 768;
 
 const fullCircle = Math.PI * 2;
 
-var creature = {
+const creature = {
   location: {
     x: 50,
     y: 50
@@ -25,10 +25,14 @@ const drawCreature = creature => {
     y: creature.location.y
   };
   const faceLocation = Geometry.rotatePoint(faceStartLocation , creature.location, creature.direction * fullCircle);
-  console.log(faceLocation);
   ctx.beginPath();
   ctx.arc(faceLocation.x, faceLocation.y, 5, 0, Math.PI * 2);
   ctx.fill();
 };
 
-drawCreature(creature);
+const draw = () => {
+  drawCreature(creature);
+  requestAnimationFrame(draw);
+};
+
+draw();
