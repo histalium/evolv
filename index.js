@@ -17,6 +17,9 @@ const creature = {
   direction: 0.125
 };
 
+const originPoint = { x: 0, y: 0 };
+const vector = { x: 1, y: 0 };
+
 const drawCreature = creature => {
   ctx.beginPath();
   ctx.arc(creature.location.x, creature.location.y, 20, 0, Math.PI * 2);
@@ -38,6 +41,11 @@ const update = () => {
   }
   if (keyState['KeyD']) {
     creature.direction = (creature.direction - 0.02) % 1;
+  }
+  if (keyState['KeyW']) {
+    var move = Geometry.rotatePoint(vector, originPoint, creature.direction * fullCircle);
+    creature.location.x += move.x;
+    creature.location.y += move.y;
   }
 }
 
