@@ -14,7 +14,12 @@ const creature = {
     x: 50,
     y: 50
   },
-  direction: 0.125
+  direction: 0.125,
+  color : {
+    r: 0.1,
+    g: 0.6,
+    b: 0.3
+  }
 };
 
 const originPoint = { x: 0, y: 0 };
@@ -23,6 +28,8 @@ const vector = { x: 1, y: 0 };
 const drawCreature = creature => {
   ctx.beginPath();
   ctx.arc(creature.location.x, creature.location.y, 20, 0, Math.PI * 2);
+  ctx.fillStyle = `rgb(${creature.color.r * 256}, ${creature.color.g * 256}, ${creature.color.b * 256})`;
+  ctx.fill();
   ctx.stroke();
   const faceStartLocation = {
     x: creature.location.x + 20, 
@@ -31,6 +38,7 @@ const drawCreature = creature => {
   const faceLocation = Geometry.rotatePoint(faceStartLocation , creature.location, creature.direction * fullCircle);
   ctx.beginPath();
   ctx.arc(faceLocation.x, faceLocation.y, 5, 0, Math.PI * 2);
+  ctx.fillStyle = 'black';
   ctx.fill();
 };
 
