@@ -22,6 +22,25 @@ const creature = {
   }
 };
 
+const range = count => [...Array(count).keys()];
+
+const creatures = range(10)
+  .map(t => {
+    return {
+      location: {
+        x: Math.random() * c.width,
+        y: Math.random() * c.height,
+      },
+      direction: Math.random(),
+      color : {
+        r: Math.random(),
+        g: Math.random(),
+        b: Math.random()
+      }
+    };
+  })
+  .concat(creature);
+
 const originPoint = { x: 0, y: 0 };
 const vector = { x: 1, y: 0 };
 
@@ -59,7 +78,7 @@ const update = () => {
 
 const draw = () => {
   ctx.clearRect(0, 0, c.width, c.height);
-  drawCreature(creature);
+  creatures.forEach(drawCreature);
 };
 
 const loop = () => {
