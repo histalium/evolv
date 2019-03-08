@@ -19,7 +19,17 @@ const creature = {
     r: 0.1,
     g: 0.6,
     b: 0.3
-  }
+  },
+  eye: [{
+    depth: 90,
+    width: 0.09
+  },{
+    depth: 100,
+    width: 0.05
+  },{
+    depth: 90,
+    width: 0.09
+  }]
 };
 
 const range = count => [...Array(count).keys()];
@@ -36,7 +46,8 @@ const creatures = range(10)
         r: Math.random(),
         g: Math.random(),
         b: Math.random()
-      }
+      },
+      eye: []
     };
   })
   .concat(creature);
@@ -59,6 +70,16 @@ const drawCreature = creature => {
   ctx.arc(faceLocation.x, faceLocation.y, 5, 0, Math.PI * 2);
   ctx.fillStyle = 'black';
   ctx.fill();
+  const totalEyeWidth = creature.eye.map(v => v.width).reduce((acc, curr) => acc + curr, 0);
+  let eyeStart = -creature.direction - (totalEyeWidth / 2);
+  creature.eye.forEach(v => {
+    ctx.beginPath();
+    ctx.arc(creature.location.x, creature.location.y, v.depth, eyeStart * fullCircle, (eyeStart + v.width) * fullCircle);
+    ctx.lineTo(creature.location.x, creature.location.y);
+    ctx.closePath();
+    ctx.stroke();
+    eyeStart += v.width;
+  });
 };
 
 const update = () => {
