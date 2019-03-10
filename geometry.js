@@ -18,11 +18,16 @@ const angleOfPoint = (point, center) => {
  };
 
  return Math.atan2(refPoint.y, refPoint.x)
+};
+
+const distanceBetweenPoints = (point1, point2) => {
+  return Math.hypot(point2.x - point1.x, point2.y - point1.y);
 }
 
 const Geometry = {
   rotatePoint,
-  angleOfPoint
+  angleOfPoint,
+  distanceBetweenPoints
 };
 
 export { Geometry };

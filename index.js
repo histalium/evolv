@@ -87,9 +87,10 @@ const drawAnglesControlledCreature = () => {
   creatures
     .filter(t => t != creature)
     .forEach(t => {
+      const distance = Geometry.distanceBetweenPoints(creature.location, t.location);
       const angle = Geometry.angleOfPoint(t.location, creature.location);
       const startLocation = {
-        x: creature.location.x + 200, 
+        x: creature.location.x + distance, 
         y: creature.location.y
       };
       const loc = Geometry.rotatePoint(startLocation, creature.location, -angle);
