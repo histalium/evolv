@@ -9,7 +9,7 @@ c.height = 768;
 
 const fullCircle = Math.PI * 2;
 
-const creature = {
+const controlledCreature = {
   location: {
     x: 50,
     y: 50
@@ -50,7 +50,7 @@ const creatures = range(10)
       eye: []
     };
   })
-  .concat(creature);
+  .concat(controlledCreature);
 
 const originPoint = { x: 0, y: 0 };
 const vector = { x: 1, y: 0 };
@@ -82,13 +82,32 @@ const drawCreature = creature => {
   });
 };
 
+const drawAnglesControlledCreature = () => {
+  const creature = controlledCreature;
+  creatures
+    .filter(t => t != creature)
+    .forEach(t => {
+      const angle = Geometry.angleOfPoint(t.location, creature.location);
+      const startLocation = {
+        x: creature.location.x + 200, 
+        y: creature.location.y
+      };
+      const loc = Geometry.rotatePoint(startLocation, creature.location, -angle);
+      ctx.beginPath()
+      ctx.moveTo(creature.location.x, creature.location.y);
+      ctx.lineTo(loc.x, loc.y);
+      ctx.stroke();
+    });
+}
+
 const update = () => {
+  const creature = controlledCreature;
   const keyState = KeyboardStateManager.getState();
   if (keyState['KeyA']) {
-    creature.direction = (creature.direction + 0.02) % 1;
+    creature.direction = (creature.direction + 0.01) % 1;
   }
   if (keyState['KeyD']) {
-    creature.direction = (creature.direction - 0.02) % 1;
+    creature.direction = (creature.direction - 0.01) % 1;
   }
   if (keyState['KeyW']) {
     var move = Geometry.rotatePoint(vector, originPoint, creature.direction * fullCircle);
@@ -100,6 +119,7 @@ const update = () => {
 const draw = () => {
   ctx.clearRect(0, 0, c.width, c.height);
   creatures.forEach(drawCreature);
+  drawAnglesControlledCreature();
 };
 
 const loop = () => {

@@ -11,8 +11,18 @@ const rotatePoint = (point, center, angle) => {
   }
 };
 
+const angleOfPoint = (point, center) => {
+ const refPoint = {
+   x: point.x - center.x,
+   y: point.y - center.y
+ };
+
+ return Math.atan2(refPoint.y, refPoint.x)
+}
+
 const Geometry = {
-  rotatePoint
+  rotatePoint,
+  angleOfPoint
 };
 
 export { Geometry };
